@@ -60,6 +60,8 @@ custom:
       - opensuse-leap-16
       - amazonlinux-2
       - amazonlinux-2023
+      - altlinux-10
+      - altlinux-11
 
 # <---- Custom Containers ---------------------------------------------------------------------------------
 
@@ -162,6 +164,15 @@ mirrors:
       - "10"
     commands:
       - dnf update -y
+
+  AltLinux:
+    container: alt
+    source_tag: "p{version}"
+    versions:
+      - "10"
+      - "11"
+    commands:
+      - apt-get update
 
   ArchLinux:
     container: archlinux/archlinux

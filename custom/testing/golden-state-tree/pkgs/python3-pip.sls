@@ -3,7 +3,9 @@
 {%- set os_major_release = salt['grains.get']('osmajorrelease', 0)|int %}
 {%- set os = salt['grains.get']('os', '') %}
 
-{%- if os_family == 'RedHat' %}
+{%- if distro.startswith('ALT') %}
+  {%- set pip_pkg_name = 'python3-module-pip' %}
+{%- elif os_family == 'RedHat' %}
   {%- if os_major_release == 2018 %}
     {%- set pip_pkg_name = 'python36-pip' %}
   {%- else %}
