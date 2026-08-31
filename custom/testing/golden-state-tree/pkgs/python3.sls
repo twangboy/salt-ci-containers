@@ -1,5 +1,7 @@
 {%- if grains['os_family'] in ('Arch', 'Solaris', 'FreeBSD', 'Gentoo', 'MacOS') %}
   {%- set python3_dev = False %}
+{%- elif grains.get('oscodename', '').startswith('ALT') %}
+  {%- set python3_dev = 'python3-dev' %}
 {%- elif grains['os'] == 'Amazon' %}
   {%- set python3_dev = 'python3-devel' %}
 {%- elif grains['os'] == 'Fedora' %}
@@ -26,6 +28,8 @@
 
 {%- if grains['os_family'] == 'Arch' %}
   {%- set python3 = 'python' %}
+{%- elif grains.get('oscodename', '').startswith('ALT') %}
+  {%- set python3 = 'python3' %}
 {%- elif grains["os_family"] == 'RedHat' and grains['osmajorrelease']|int == 8 %}
   {%- set python3 = 'python36' %}
 {%- elif grains['os_family'] == 'Suse' and grains.get('osmajorrelease', 0)|int >= 16 %}

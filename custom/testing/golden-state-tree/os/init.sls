@@ -7,6 +7,8 @@ include:
   - os.amazon2023
   {%- elif grains['os_family'] == 'Arch' %}
   - os.arch
+  {%- elif grains.get('oscodename', '').startswith('ALT') %}
+  - os.alt
   {%- elif grains['os'] == 'CentOS' %}
   - os.centos
   {%- elif grains['os'] == 'CentOS Stream' %}

@@ -1,5 +1,7 @@
 # [![Salt Testing](https://github.com/saltstack/salt-ci-containers/actions/workflows/testing-containers.yml/badge.svg)](https://github.com/saltstack/salt-ci-containers/actions/workflows/testing-containers.yml)
 
+- testing:altlinux-10 - `ghcr.io/saltstack/salt-ci-containers/testing:altlinux-10`
+- testing:altlinux-11 - `ghcr.io/saltstack/salt-ci-containers/testing:altlinux-11`
 - testing:amazonlinux-2 - `ghcr.io/saltstack/salt-ci-containers/testing:amazonlinux-2`
 - testing:amazonlinux-2023 - `ghcr.io/saltstack/salt-ci-containers/testing:amazonlinux-2023`
 - testing:debian-11 - `ghcr.io/saltstack/salt-ci-containers/testing:debian-11`
