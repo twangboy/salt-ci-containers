@@ -12,6 +12,7 @@
     'procps',
     'python3',
     'python3-dev',
+    'systemd',
     'xz',
 ] %}
 
