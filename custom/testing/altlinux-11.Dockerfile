@@ -15,7 +15,18 @@ RUN <<EOF
   apt-get update
   chmod -x /usr/lib/rpm/0ldconfig.filetrigger
 
-  apt-get install -y curl wget tar xz patchelf gcc openssl
+  # apt-get install can intermittently fail with a spurious RPM
+  # "erase skipped" / package-erase conflict under QEMU arm64
+  # emulation. Retry a few times before giving up; unlike the
+  # ldconfig retry precedent in ubuntu-22.04.Dockerfile, this install
+  # is load-bearing for every later step in this file, so exhausting
+  # the retries is fatal.
+  for i in 1 2 3 4 5; do
+    apt-get install -y curl wget tar xz patchelf gcc openssl && break
+    echo "apt-get install attempt $i failed, retrying..."
+    [ "$i" -eq 5 ] && exit 1
+    sleep 1
+  done
 
   LIBCRYPTO_PATH=$(find /usr/lib64 /lib64 /usr/lib /lib -maxdepth 1 -name 'libcrypto.so*' 2>/dev/null | sort -V | tail -n1)
   [ -n "$LIBCRYPTO_PATH" ] && [ ! -e "$(dirname "$LIBCRYPTO_PATH")/libcrypto.so" ] && \
