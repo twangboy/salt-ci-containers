@@ -58,8 +58,12 @@ RUN <<EOF
   SYSTEMD_BIN=$(find /usr/lib/systemd /lib/systemd /bin /usr/bin -maxdepth 1 -name systemd -type f 2>/dev/null | head -n1)
   [ -n "$SYSTEMD_BIN" ] && [ ! -e /usr/lib/systemd/systemd ] && ln -sf "$SYSTEMD_BIN" /usr/lib/systemd/systemd
 
+  # ALT's apt-get (apt-rpm) keeps its package lists under /var/cache/apt
+  # itself, unlike Debian's apt which keeps them in /var/lib/apt/lists.
+  # Wiping the whole tree leaves apt-get update unable to run in
+  # containers started from this image, so only clear the archive cache.
   apt-get clean
-  rm -rf /var/cache/apt
+  rm -rf /var/cache/apt/archives/*
 EOF
 
 CMD ["/bin/bash"]
