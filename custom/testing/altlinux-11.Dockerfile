@@ -39,6 +39,14 @@ RUN <<EOF
   rm -rf /var/cache/salt
   rm -rf /etc/salt
   rm -rf /tmp/*
+
+  # salt-bootstrap CI starts test containers with /usr/lib/systemd/systemd
+  # as the entrypoint. ALT's systemd package doesn't install the binary
+  # there, so locate it and symlink it into place.
+  mkdir -p /usr/lib/systemd
+  SYSTEMD_BIN=$(find /usr/lib/systemd /lib/systemd /bin /usr/bin -maxdepth 1 -name systemd -type f 2>/dev/null | head -n1)
+  [ -n "$SYSTEMD_BIN" ] && [ ! -e /usr/lib/systemd/systemd ] && ln -sf "$SYSTEMD_BIN" /usr/lib/systemd/systemd
+
   apt-get clean
   rm -rf /var/cache/apt
 EOF
