@@ -58,8 +58,12 @@ RUN <<EOF
   # itself, unlike Debian's apt which keeps them in /var/lib/apt/lists.
   # Wiping the whole tree leaves apt-get update unable to run in
   # containers started from this image, so only clear the archive cache.
+  # apt-get won't recreate archives/partial on its own (unlike Debian's
+  # apt), so it has to be put back or every later apt-get update fails
+  # with "Archive directory .../partial is missing".
   apt-get clean
   rm -rf /var/cache/apt/archives/*
+  mkdir -p /var/cache/apt/archives/partial
 EOF
 
 CMD ["/bin/bash"]
