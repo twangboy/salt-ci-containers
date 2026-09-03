@@ -40,7 +40,8 @@ include:
   - pkgs.swig
   - pkgs.tar
   - pkgs.zlib
-  {%- if grains['osrelease'] != '13' and grains['osarch'] != 'arm64' %}
+  {#- HashiCorp no longer publishes a Release file for bullseye (11), same as trixie (13) #}
+  {%- if grains['osrelease'] not in ('11', '13') and grains['osarch'] != 'arm64' %}
   - pkgs.vault
   {%- endif %}
   - pkgs.jq
