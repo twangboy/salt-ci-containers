@@ -62,6 +62,7 @@ custom:
       - amazonlinux-2023
       - altlinux-10
       - altlinux-11
+      - archlinux
 
 # <---- Custom Containers ---------------------------------------------------------------------------------
 
