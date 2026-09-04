@@ -7,7 +7,8 @@
 {%- endif %}
 
 {%- if grains['os'] == 'Debian' %}
-  {% set pkgver = '=5:28.4.0-1~debian.11~bullseye' %}
+  {%- set debian_codenames = {'11': 'bullseye', '12': 'bookworm', '13': 'trixie'} %}
+  {% set pkgver = '=5:28.4.0-1~debian.' + grains['osrelease'] + '~' + debian_codenames[grains['osrelease']] %}
 {%- else %}
   {% set pkgver = '' %}
 {%- endif %}

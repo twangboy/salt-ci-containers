@@ -7,9 +7,7 @@ include:
   {%- elif grains['osrelease'] != '13' %}
   - pkgs.dnsutils
   {%- endif %}
-  {%- if grains['osrelease'] == '11' %}
   - pkgs.docker
-  {%- endif %}
   - pkgs.file
   - pkgs.gcc
   - pkgs.gpg
@@ -40,8 +38,8 @@ include:
   - pkgs.swig
   - pkgs.tar
   - pkgs.zlib
-  {#- HashiCorp no longer publishes a Release file for bullseye (11), same as trixie (13) #}
-  {%- if grains['osrelease'] not in ('11', '13') and grains['osarch'] != 'arm64' %}
+  {#- HashiCorp no longer publishes a Release file for trixie (13) #}
+  {%- if grains['osrelease'] != '13' and grains['osarch'] != 'arm64' %}
   - pkgs.vault
   {%- endif %}
   - pkgs.jq
