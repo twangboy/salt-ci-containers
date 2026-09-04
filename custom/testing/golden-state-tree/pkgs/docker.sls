@@ -107,6 +107,7 @@ enable-docker-service:
   file.symlink:
     - name: /etc/systemd/system/multi-user.target.wants/docker.service
     - target: /usr/lib/systemd/system/docker.service
+    - makedirs: True
   {%- endif %}
 
 {#-
@@ -126,6 +127,7 @@ fix-for-mysql:
   file.managed:
     - contents: |
         {"storage-driver": "overlay2"}
+    - makedirs: True
     - require:
       - install-docker
 

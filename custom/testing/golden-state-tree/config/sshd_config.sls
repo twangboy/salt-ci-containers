@@ -53,7 +53,11 @@ HostKeyAlgorithms-{{ algo }}:
 {%- endfor %}
 {%- endif %}
 
-{%- if grains.get("systemd", None) %}
+{#- Salt's systemd service module can't confirm sshd's unit is available
+   for Arch during a container build (same class of gap already seen with
+   locale.system/timezone.system/service.enabled: docker on Arch), so skip
+   enabling it there rather than fail the build over auxiliary sshd setup. #}
+{%- if grains.get("systemd", None) and grains['os_family'] != 'Arch' %}
 
 stop-sshd:
   service.dead:
