@@ -63,10 +63,12 @@ stop-sshd:
     - name: sshd
     {%- endif %}
     - enable: True
+    {%- if salt["file.file_exists"](ssh_config) %}
     - require:
       - ClientAliveInterval
       - ClientAliveCount
       - TCPKeepAlive
+    {%- endif %}
 
 
 start-sshd:

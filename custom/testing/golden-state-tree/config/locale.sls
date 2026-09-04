@@ -132,7 +132,17 @@ us_locale:
       - pkg: suse_local
     {%- endif %}
 
-  {%- if grains['os_family'] not in ('FreeBSD',) %}
+  {%- if on_arch %}
+{#- Salt's locale.system state errors "Arch Linux" is unsupported! (no
+   dedicated provider registered) - write /etc/locale.conf directly,
+   the same file systemd-based distros' provider would write anyway. #}
+default_locale:
+  file.managed:
+    - name: /etc/locale.conf
+    - contents: 'LANG=en_US.UTF-8'
+    - require:
+      - locale: us_locale
+  {%- elif grains['os_family'] not in ('FreeBSD',) %}
 default_locale:
   locale.system:
     - name: en_US.UTF-8
