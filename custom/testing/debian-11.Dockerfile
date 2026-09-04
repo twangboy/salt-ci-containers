@@ -39,7 +39,18 @@ RUN <<EOF
   # This should go away after we have a proper fix in salt/utils/rsax931.py
   sed -i 's/lib = ctypes.util.find_library("crypto")/lib = (glob.glob(os.path.join(os.path.dirname(os.path.dirname(sys.executable)), "lib", "libcrypto.so*")) + [ctypes.util.find_library("crypto")])[0]/' ./salt/lib/python3.10/site-packages/salt/utils/rsax931.py
 
-  ./salt/salt-call --local --pillar-root=/golden-pillar-tree --file-root=/golden-state-tree state.apply provision
+  # apt's package index can momentarily disagree with what's actually
+  # published on Debian's mirror network (index advertises a version whose
+  # .deb 404s). This is unrelated to QEMU/arch - it's a real mirror
+  # consistency gap - so retry with a fresh index a few times before
+  # giving up.
+  for i in 1 2 3; do
+    apt update -y
+    ./salt/salt-call --local --pillar-root=/golden-pillar-tree --file-root=/golden-state-tree state.apply provision && break
+    echo "state.apply provision attempt $i failed (possible upstream mirror inconsistency), retrying..."
+    [ "$i" -eq 3 ] && exit 1
+    sleep 30
+  done
 
   rm -rf salt
   rm -rf salt-$SALT_VERSION-onedir-linux-$ARCH.tar.xz
