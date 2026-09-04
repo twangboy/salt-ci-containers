@@ -4,7 +4,6 @@
 - testing:altlinux-11 - `ghcr.io/saltstack/salt-ci-containers/testing:altlinux-11`
 - testing:amazonlinux-2 - `ghcr.io/saltstack/salt-ci-containers/testing:amazonlinux-2`
 - testing:amazonlinux-2023 - `ghcr.io/saltstack/salt-ci-containers/testing:amazonlinux-2023`
-- testing:debian-11 - `ghcr.io/saltstack/salt-ci-containers/testing:debian-11`
 - testing:debian-12 - `ghcr.io/saltstack/salt-ci-containers/testing:debian-12`
 - testing:debian-13 - `ghcr.io/saltstack/salt-ci-containers/testing:debian-13`
 - testing:fedora-42 - `ghcr.io/saltstack/salt-ci-containers/testing:fedora-42`

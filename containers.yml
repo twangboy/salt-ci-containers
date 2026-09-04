@@ -52,7 +52,6 @@ custom:
       - rockylinux-10
       - photon-4
       - photon-5
-      - debian-11
       - debian-12
       - debian-13
       - fedora-42
