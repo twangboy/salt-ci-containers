@@ -38,8 +38,7 @@ include:
   - pkgs.swig
   - pkgs.tar
   - pkgs.zlib
-  {#- HashiCorp no longer publishes a Release file for trixie (13) #}
-  {%- if grains['osrelease'] != '13' and grains['osarch'] != 'arm64' %}
+  {%- if grains['osarch'] != 'arm64' %}
   - pkgs.vault
   {%- endif %}
   - pkgs.jq
