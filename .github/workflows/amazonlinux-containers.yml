@@ -62,7 +62,7 @@ jobs:
           tools ci matrix ${{ env.PATH_IN_REPO }}
 
   build:
-    runs-on: ubuntu-24.04
+    runs-on: ${{ matrix.dockerinfo.platform == 'linux/arm64/v8' && 'ubuntu-24.04-arm' || 'ubuntu-24.04' }}
     needs: matrix-generator
     name: "Build ${{ matrix.dockerinfo.name }}:${{ matrix.dockerinfo.tag }}${{ matrix.dockerinfo.platform && format(' ({0})', matrix.dockerinfo.platform) || ''}}"
     timeout-minutes: 600
